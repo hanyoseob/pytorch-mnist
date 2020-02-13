@@ -37,14 +37,6 @@ parser.add_argument('--lr', type=float, default=1e-3, dest='lr')
 parser.add_argument('--num_freq_disp', type=int,  default=20, dest='num_freq_disp')
 parser.add_argument('--num_freq_save', type=int,  default=5, dest='num_freq_save')
 
-parser.add_argument('--lr_policy', type=str, default='linear', choices=['linear', 'step', 'plateau', 'cosine'], dest='lr_policy')
-parser.add_argument('--n_epochs', type=int, default=100, dest='n_epochs')
-parser.add_argument('--n_epochs_decay', type=int, default=100, dest='n_epochs_decay')
-parser.add_argument('--lr_decay_iters', type=int, default=50, dest='lr_decay_iters')
-
-parser.add_argument('--optim', default='sgd', choices=['sgd', 'adam', 'rmsprop'], dest='optim')
-parser.add_argument('--beta1', default=0.5, dest='beta1')
-
 parser.add_argument('--ny_in', type=int, default=28, dest='ny_in')
 parser.add_argument('--nx_in', type=int, default=28, dest='nx_in')
 parser.add_argument('--nch_in', type=int, default=1, dest='nch_in')

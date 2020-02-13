@@ -26,9 +26,6 @@ class Train:
 
         self.lr = args.lr
 
-        self.optim = args.optim
-        self.beta1 = args.beta1
-
         self.ny_in = args.ny_in
         self.nx_in = args.nx_in
         self.nch_in = args.nch_in
