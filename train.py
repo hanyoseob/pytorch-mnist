@@ -231,10 +231,14 @@ class Train:
         if not os.path.exists(dir_result_save):
             os.makedirs(dir_result_save)
 
-        transform_test = transforms.Compose([transforms.ToTensor(), Normalize()])
+        dir_data_test = os.path.join(self.dir_data, name_data, 'test')
+
+        transform_test = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean=(0.5,), std=(0.5,))])
+        # transform_test = transforms.Compose([ToTensor(), Normalize(mean=0.5, std=0.5)])
         transform_inv = transforms.Compose([ToNumpy(), Denormalize()])
 
         dataset_test = datasets.MNIST(root='.', train=False, download=True, transform=transform_test)
+        # dataset_test = Dataset(dir_data_test, data_type=self.data_type, nch=self.nch_in, transform=transform_test)
         loader_test = torch.utils.data.DataLoader(dataset_test, batch_size=batch_size, shuffle=False, num_workers=0)
 
         num_test = len(loader_test.dataset)
@@ -260,8 +264,13 @@ class Train:
             loss_test = []
             pred_test = []
 
-            # for i, data in enumerate(loader_train, 1):
+            # for i, data in enumerate(loader_test, 1):
             for i, (input, label) in enumerate(loader_test, 1):
+
+                input = input.to(device)
+                label = label.to(device)
+                # input = data['input'].to(device)
+                # label = data['label'].to(device)
 
                 output = net(input)
                 pred = output.max(1, keepdim=True)[1]
