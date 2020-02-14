@@ -114,7 +114,7 @@ class Train:
         dir_chck = os.path.join(self.dir_checkpoint, self.scope, name_data)
 
         dir_data_train = os.path.join(self.dir_data, name_data, 'train')
-        dir_log = os.path.join(self.dir_log, self.scope, name_data)
+        dir_log = os.path.join(self.dir_log, self.scope)
 
         transform_train = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean=(0.5,), std=(0.5,))])
         # transform_train = transforms.Compose([ToTensor(), Normalize(mean=0.5, std=0.5)])
