@@ -6,7 +6,6 @@ import torch.nn as nn
 
 from torchvision import transforms, datasets
 from torch.utils.tensorboard import SummaryWriter
-from statistics import mean
 
 
 class Train:
@@ -167,7 +166,7 @@ class Train:
                 # label = data['label'].to(device)
 
                 output = net(input)
-                pred = output.max(1, keepdim=True)[1]
+                pred = torch.softmax(output, dim=1).max(dim=1, keepdim=True)[1]
 
                 # backward netD
                 optim.zero_grad()
@@ -179,17 +178,17 @@ class Train:
 
                 # get losses
                 loss_train += [loss.item()]
-                pred_train += [pred.eq(label.view_as(pred)).sum().item() / label.shape[0]]
+                pred_train += [((pred == label.view_as(pred)).type(torch.float)).mean(dim=0).item()]
 
                 print('TRAIN: EPOCH %d: BATCH %04d/%04d: LOSS: %.4f ACC: %.4f' %
-                      (epoch, i, num_batch_train, mean(loss_train), 100 * mean(pred_train)))
+                      (epoch, i, num_batch_train, np.mean(loss_train), 100 * np.mean(pred_train)))
 
                 if should(num_freq_disp):
                     ## show output
                     input = transform_inv(input)
                     writer_train.add_images('input', input, num_batch_train * (epoch - 1) + i, dataformats='NHWC')
 
-            writer_train.add_scalar('loss', mean(loss_train), epoch)
+            writer_train.add_scalar('loss', np.mean(loss_train), epoch)
 
             ## save
             if (epoch % num_freq_save) == 0:
@@ -269,15 +268,15 @@ class Train:
                 # label = data['label'].to(device)
 
                 output = net(input)
-                pred = output.max(1, keepdim=True)[1]
+                pred = torch.softmax(output, dim=1).max(dim=1, keepdim=True)[1]
 
                 loss = fn(output, label)
 
                 # get losses
                 loss_test += [loss.item()]
-                pred_test += [pred.eq(label.view_as(pred)).sum().item()/label.shape[0]]
+                pred_test += [((pred == label.view_as(pred)).type(torch.float)).mean(dim=0).item()]
 
-                print('TEST: BATCH %04d/%04d: LOSS: %.4f ACC: %.4f' % (i, num_batch_test, mean(loss_test), 100 * mean(pred_test)))
+                print('TEST: BATCH %04d/%04d: LOSS: %.4f ACC: %.4f' % (i, num_batch_test, np.mean(loss_test), 100 * np.mean(pred_test)))
 
-            print('TEST: AVERAGE LOSS: %.6f' % (mean(loss_test)))
-            print('TEST: AVERAGE ACC: %.6f' % (100 * mean(pred_test)))
+            print('TEST: AVERAGE LOSS: %.6f' % (np.mean(loss_test)))
+            print('TEST: AVERAGE ACC: %.6f' % (100 * np.mean(pred_test)))
