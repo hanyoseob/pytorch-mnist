@@ -30,7 +30,7 @@ This is a **tutorial of MNIST Classification using CNN**.
                      --dir_checkpoint [checkpoint directory] \
                      --dir_result [result directory]
                      --gpu_ids [gpu id; '-1': no gpu, '0, 1, ..., N-1': gpus]
--
+
 * To test using trained network, set **[scope name]** defined in the **train** phase.
 
 ## Tensorboard
