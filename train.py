@@ -133,8 +133,8 @@ class Train:
         init_net(net, init_type='normal', init_gain=0.02, gpu_ids=gpu_ids)
 
         ## setup loss & optimization
-        fn = nn.NLLLoss().to(device)
-        # fn = nn.CrossEntropyLoss().to(device)
+        # fn = nn.NLLLoss().to(device)
+        fn = nn.CrossEntropyLoss().to(device)
 
         params = net.parameters()
 
@@ -226,11 +226,6 @@ class Train:
         ## setup dataset
         dir_chck = os.path.join(self.dir_checkpoint, self.scope, name_data)
 
-        dir_result = os.path.join(self.dir_result, self.scope, name_data)
-        dir_result_save = os.path.join(dir_result, 'images')
-        if not os.path.exists(dir_result_save):
-            os.makedirs(dir_result_save)
-
         dir_data_test = os.path.join(self.dir_data, name_data, 'test')
 
         transform_test = transforms.Compose([transforms.ToTensor(), transforms.Normalize(mean=(0.5,), std=(0.5,))])
@@ -250,7 +245,8 @@ class Train:
         init_net(net, init_type='normal', init_gain=0.02, gpu_ids=gpu_ids)
 
         ## setup loss & optimization
-        fn = nn.NLLLoss().to(device)
+        # fn = nn.NLLLoss().to(device)
+        fn = nn.CrossEntropyLoss().to(device)
 
         ## load from checkpoints
         st_epoch = 0

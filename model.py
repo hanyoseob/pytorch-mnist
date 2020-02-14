@@ -36,7 +36,7 @@ class CLS(nn.Module):
         x = self.drop_fc1(self.relu_fc1(self.fc1(x)))
         x = self.fc2(x)
 
-        x = torch.log_softmax(x, dim=1)
+        # x = torch.log_softmax(x, dim=1)
 
         return x
 
