@@ -11,12 +11,16 @@ This is a **tutorial of MNIST Classification using CNN**.
 ## Train
     $ python main.py --mode train \
                      --scope [scope name] \
-                     --name_data [data name] \
-                     --dir_data [data directory] \
                      --dir_log [log directory] \
                      --dir_checkpoint [checkpoint directory]
                      --gpu_ids [gpu id; '-1': no gpu, '0, 1, ..., N-1': gpus]
  ---
+    $ python main.py --mode train \
+                     --scope mnist \
+                     --dir_log ./log \
+                     --dir_checkpoint ./checkpoint
+                     --gpu_ids 0
+ 
 * Set **[scope name]** uniquely.
 * To understand hierarchy of directories based on their arguments, see **directories structure** below. 
 * Hyperparameters were written to **arg.txt** under the **[log directory]**.
@@ -24,12 +28,15 @@ This is a **tutorial of MNIST Classification using CNN**.
 ## Test
     $ python main.py --mode test \
                      --scope [scope name] \
-                     --name_data [data name] \
-                     --dir_data [data directory] \
                      --dir_log [log directory] \
                      --dir_checkpoint [checkpoint directory] \
-                     --dir_result [result directory]
                      --gpu_ids [gpu id; '-1': no gpu, '0, 1, ..., N-1': gpus]
+---
+    $ python main.py --mode test \
+                     --scope mnist \
+                     --dir_log ./log \
+                     --dir_checkpoint ./checkpoint
+                     --gpu_ids 0
 
 * To test using trained network, set **[scope name]** defined in the **train** phase.
 
