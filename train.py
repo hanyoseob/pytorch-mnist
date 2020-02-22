@@ -7,7 +7,6 @@ import torch.nn as nn
 from torchvision import transforms, datasets
 from torch.utils.tensorboard import SummaryWriter
 
-
 class Train:
     def __init__(self, args):
         self.mode = args.mode
